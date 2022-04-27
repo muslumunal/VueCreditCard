@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="animate.css">
+</head>
+<body class="p-4">
+
+<div id="app">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+
+                <label >Kart Numaranız</label>
+                <input  type="number" v-model="kartNo"  class="form-control" @click="onDon" ><br>
+                <label >Kart Üzerindeki İsim</label>
+                <input type="text" v-model="isim"  class="form-control" @click="onDon"><br>
+                Son Kullanma Tarihi
+                <div class="row">
+                    <div class="col-md-6">
+                        <select v-model="ay" class="form-control" @click="onDon">
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">05</option>
+                            <option value="05">05</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <select v-model="yil" class="form-control" @click="onDon">
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                        </select>
+                    </div>
+
+                </div>
+                <br>
+                <label> Güvenlik Kodu</label>
+                <input type="number" v-model.number="cvv" class="form-control" @click="arkaDon" >
+            </div>
+            <div class="col-md-6" >
+
+                <div :style="OnKartStyle" v-if="onYuz" class="flipInX animated">
+                    <p style="color: white; font-size: 35px; font-family: 'Agency FB' ; padding-top: 200px; position:fixed; padding-left: 60px">{{kartUzeriNo}}</p>
+                    <p style="color: white; font-size: 30px; font-family: 'Agency FB' ; padding-top: 270px; position:fixed; padding-left: 60px">{{kartUzeriIsim}}</p>
+                    <p style="color: white; font-size: 30px; font-family: 'Agency FB' ; padding-top: 237px; position:fixed; padding-left: 420px"> {{kartUzeriAy}} </p>
+                    <p style="color: white; font-size: 30px; font-family: 'Agency FB' ; padding-top: 237px; position:fixed; padding-left: 450px"> / {{ kartUzeriYil}} </p>
+                </div>
+
+
+                <div :style="ArkaKartStyle" v-if="arkaYuz" class="flipInY animated">
+                    <p style="color: black; font-size: 30px; font-family: 'Agency FB' ; padding-top: 185px; position:fixed; padding-left: 450px">{{ kartUzeriCvv}} </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script src="../assets/js/vue.js">
+</script>
+
+<script>
+    const app = new Vue({
+        el: '#app',
+        name: 'Müslüm ÜNAL',
+        data:{
+            kartUzeriNo:'____ ____ ____ ____',
+            kartUzeriIsim:'_________ _______',
+            kartUzeriAy:'__',
+            kartUzeriYil:'__',
+            kartUzeriCvv:'___',
+            arkaYuz:false,
+            onYuz:true,
+            kartNo:'',
+            isim:'',
+            ay:'',
+            yil:'',
+            cvv:'',
+          
+            OnKartStyle:{
+                backgroundImage: "url('../assets/img/Untitled-1.png')",
+                height: '373px',
+                width: '581px'
+            },
+            ArkaKartStyle:{
+                backgroundImage: "url('../assets/img/kart-arka.png')",
+                height: '373px',
+                width: '581px'
+            }
+        },
+        methods:{
+            arkaDon(){
+                this.onYuz=false;
+                this.arkaYuz=true;
+            },
+            onDon(){
+                this.onYuz=true;
+                this.arkaYuz=false;
+            }
+           
+        },
+        watch:{
+            kartNo(neWValue,oldValue){
+                if(this.kartNo.length==0){
+                    this.kartUzeriNo = "____ ____ ____ ____";
+                }
+                else { 
+                    if(this.kartNo > 999999999999999 ){
+                       this.kartNo  = oldValue;
+                       this.kartUzeriNo = oldValue;
+                
+                    }else{
+                        this.kartUzeriNo = neWValue;
+                    }
+                    
+                }
+
+            },
+            isim(value)
+            {
+                if(this.isim.length==0){
+                    this.kartUzeriIsim = "____ ____ ____ ____";
+                }
+                else {
+                    this.kartUzeriIsim = value;
+                }
+            },
+            ay(value)
+            {
+                if(this.ay.length==0){
+                    this.kartUzeriAy = "__";
+                }
+                else {
+                    this.kartUzeriAy = value;
+                }
+            },
+            yil(value)
+            {
+                if(this.yil.length==0){
+                    this.kartUzeriYil = "__";
+                }
+                else {
+                    this.kartUzeriYil = value;
+                }
+            },
+            cvv(neWValue,oldValue)
+            {
+                if(this.cvv.length==0){
+                    this.kartUzeriCvv = "__";
+                }
+                else { 
+                    if(this.cvv > 999 ){
+                       this.cvv  = oldValue;
+                       this.kartUzeriCvv = oldValue;
+                
+                    }else{
+                        this.kartUzeriCvv = neWValue;
+                    }
+                    
+                }
+            }
+        }
+
+    })
+</script>
+</body>
+</html>
